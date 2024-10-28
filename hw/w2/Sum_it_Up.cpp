@@ -9,10 +9,10 @@ void dfs(int id){
   if(id == n) return;
   if(sum == t) ans.push_back(tmp);
   for(int i = id+1; i < n; i++) {
-    if(a[i] == a[i-1] && i > id+1) continue;
+    if(a[i] == a[i-1] && i > id+1) continue; //重點 
     sum+=a[i];
     tmp.push_back(a[i]);
-    dfs(i);
+    dfs(i); //重點
     sum-=a[i];
     tmp.pop_back();
   }
@@ -23,7 +23,7 @@ int main() {
     cin >> n;
     for(int i = 0; i < n; i++)
       cin >> a[i];
-    ans.clear();
+    ans.clear(); //記得初始化
     sum = 0;
     dfs(-1);
     cout << "Sums of " << t <<":\n";

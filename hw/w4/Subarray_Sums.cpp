@@ -1,3 +1,4 @@
+//想法 pre-pre
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
@@ -9,7 +10,7 @@ int main(){
   pre[0] = 0;
   map<ll, int> mp;
  
-  mp[0] = 1;
+  mp[0] = 1; //記得
   for(int i = 1; i <= n; i++){
     cin >> a[i];
   }

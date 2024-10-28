@@ -12,9 +12,9 @@ int main(){
   for(int i = 1000005; i >= 1; i--){
     int div = 0;
     for(int j = i; j < 1000005; j += i){
-      div += cnt[j];
+      div += cnt[j]; //j為因數的數量
     }
-    if(div > 1){
+    if(div > 1){ //代表至少為兩個數的公因數
       cout << i << endl;
       return 0;
     }
