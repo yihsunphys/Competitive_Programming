@@ -48,7 +48,6 @@ int main(){
   int grid = 0;
   for(int i = 0; i < 9; i++) cin >> x[i];
   for(int i = 0; i < 9; i++){
-    //cin >> x[i];
     grid += (x[8-i]-1) * power[i];
   }
   cout << solve(grid, target) << '\n'; 

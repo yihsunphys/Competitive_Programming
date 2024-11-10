@@ -41,8 +41,6 @@ int main() {
             next[prev[offset * 2 + a]] = offset * 2 + b;
             next[prev[offset * 2 + b]] = next[offset + a];
             prev[offset * 2 + b] = prev[offset * 2 + a];
-
-            // 清空佇列 a
             next[offset + a] = offset * 2 + a;
             prev[offset * 2 + a] = offset + a;
         }

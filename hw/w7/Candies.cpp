@@ -1,25 +1,28 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
-ll extended_gcd(ll a, ll b, ll &x, ll &y){
-  if(b == 0){
-    x = 1, y = 0;
-    return a;
-  }
-  ll x1, y1;
-  ll g = extended_gcd(b, a % b, x1, y1);
-  x = y1;
-  y = x1 - (a / b) * y1;
-  return g;
+#define pll pair<ll, ll> 
+pll extended_gcd(ll x, ll y){
+  if(y==0) return {1,0};
+  auto [x_, y_] = extended_gcd(y, x%y);
+  return {y_, x_-x/y*y_};
 }
-
 int main(){
   int t;
   cin >> t;
   while(t--){
-    vector<ll> k(3), r(3);
-    for(int i = 0; i < 3; i++)
-      cin >> k[i] >> r[i];
-    cout << crt(k, r) << '\n';
+    ll a[3], b[3], M = 1;
+    for(int i = 0; i < 3; i++){
+      cin >> a[i] >> b[i];
+      M *=  a[i];
+    }
+    ll res = 0;
+    for(int i = 0; i < 3; i++){
+      ll m = M/a[i];
+      auto [x, y] = extended_gcd(m, a[i]);
+      ll t = (x%a[i]+a[i])%a[i];
+      res = (res+b[i]*m*t)%M;
+    }
+    cout << res << '\n';
   }
 }

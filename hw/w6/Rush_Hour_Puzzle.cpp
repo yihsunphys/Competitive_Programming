@@ -22,12 +22,6 @@ int main(){
 	for(int i = 0; i < 6; i++)
 	  for(int j = 0; j < 6; j++)
 		cur[i][j] = q.front().first[i][j];
-	// for(int i = 0; i < 6; i++){
-	//   for(int j = 0; j < 6; j++){
-	// 	cout << cur[i][j] << ' ';
-	//   }
-	//   cout << '\n';
-	// }
 	q.pop();
 	//終止條件
 	if(cur[2][5] == 1){
@@ -54,14 +48,7 @@ int main(){
 			  yy += dy[k];
 			}
 			xx -= dx[k], yy -= dy[k];
-			//cout << x << " " << y << " " << xx <<" " << yy << '\n';
 			swap(cur[i][j], cur[xx][yy]);
-			// for(int i = 0; i < 6; i++){
-	  		//   for(int j = 0; j < 6; j++){
-			// 	cout << cur[i][j] << ' ';	
-			// 	}
-	        //   cout << '\n';
-	        // }
 			if(!st.count(cur)){ 
 			  q.push({cur, mov+1});
 			  st.insert(cur);

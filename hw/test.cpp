@@ -1,72 +1,69 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define pii pair<int, int>
-int n, m;
-char mat[1005][1005];
-int dir[1005][1005];
-int dx[] = {1, -1, 0, 0}; // 下, 上, 右, 左
-int dy[] = {0, 0, 1, -1};
-
-int main() {
-    memset(dir, -1, sizeof(dir));
-    cin >> n >> m;
-    pii start;
-    queue<pii> q, mq;
-    for(int i = 0; i < n; i++) {
-        for(int j = 0; j < m; j++) {
-            cin >> mat[i][j];
-            if(mat[i][j] == 'A') start = {i, j};
-            if(mat[i][j] == 'M') {
-                mq.push({i, j});
-                mat[i][j] = '#'; // 怪物起始位置標記為障礙
-            }
-        }
+int main(){
+  int n;
+  cin >> n;
+  queue<int> q;
+  priority_queue<int, vector<int>, greater<int>> pq;
+  while(n--){
+    int op;
+    cin >> op;
+    if(op == 1){
+      int num;
+      cin >> num;
+      q.push(num);
     }
-    q.push(start);
-    int res = 0;
-    
-    while(!q.empty()) {
-        // 怪物移動
-        int monsterMoves = mq.size();
-        for(int i = 0; i < monsterMoves; i++) {
-            auto now = mq.front(); mq.pop();
-            for(int j = 0; j < 4; j++) {
-                int x = now.first + dx[j];
-                int y = now.second + dy[j];
-                if(x < 0 || x >= n || y < 0 || y >= m || mat[x][y] != '.') continue;
-                mat[x][y] = '#';
-                mq.push({x, y});
-            }
-        }
-
-        // 玩家移動
-        int playerMoves = q.size();
-        for(int i = 0; i < playerMoves; i++) {
-            pii now = q.front(); q.pop();
-            if(now.first == 0 || now.first == n-1 || now.second == 0 || now.second == m-1) {
-                cout << "YES\n" << res << '\n';
-                vector<char> path;
-                while(now != start) {
-                    int j = dir[now.first][now.second];
-                    path.push_back("DURL"[j]);
-                    now = {now.first - dx[j], now.second - dy[j]};
-                }
-                reverse(path.begin(), path.end());
-                for(auto it : path)
-                    cout << it;
-                return 0;
-            }
-            mat[now.first][now.second] = '#'; // 訪問過的位置標記
-            for(int j = 0; j < 4; j++) {
-                int x = now.first + dx[j];
-                int y = now.second + dy[j];
-                if(x < 0 || x >= n || y < 0 || y >= m || mat[x][y] == '#') continue;
-                mat[x][y] = '#';
-                q.push({x, y});
-                dir[x][y] = j; 
-            }
-        }
-        res++;
+    else if(op == 2){
+      if(!pq.empty()){
+        cout << pq.top() << '\n';
+        pq.pop();
+      }
+      else{
+        cout << q.front() << '\n';
+        q.pop();
+      }
     }
-    cout << "NO\n";
+    else {
+      while(!q.empty()){
+        pq.push(q.front());
+        q.pop();
+      }
+    }
+  }
+}
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int n;
+  while(cin>>n){
+    priority_queue<int, vector<int>, greater<int>> pq;
+    queue<int> q;
+    while(n--){
+      int x;
+      cin >> x;
+      if(x == 1) {
+        int num;
+        cin >> num;
+        q.push(num);
+      }
+      else if(x == 2){
+        if(pq.size()){
+          cout << pq.top() << endl;
+          pq.pop();
+        }
+        else {
+          cout << q.front() << endl;
+          q.pop();
+        }
+      }
+      else {
+        while(q.size()){
+          pq.push(q.front());
+          q.pop();
+        }
+      }
+    }
+  }
 }

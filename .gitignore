@@ -1,3 +1,5 @@
 *.exe
 *.txt
 test.cpp
+/hw/*.txt
+/hw/*.exe

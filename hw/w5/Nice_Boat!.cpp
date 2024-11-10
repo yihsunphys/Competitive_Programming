@@ -22,15 +22,6 @@ int main(void){
             while(idx<=n && A[idx]<A[i]) idx = R[idx];
             R[i] = idx;
         }
-        for(int i = 0; i <= n; i++){
-            cout << A[i] << " \n"[i==n];
-        }
-        for(int i = 0; i <= n; i++){
-            cout << L[i] << " \n"[i==n];
-        }
-        for(int i = 0; i <= n; i++){
-            cout << R[i] << " \n"[i==n];
-        }
         int l = 0, r = 0, res = 0;
         while(l < n){
             while(r<=n && R[r]<L[l]) r = R[r];
@@ -41,3 +32,5 @@ int main(void){
     }
     return 0;
 }
+
+
