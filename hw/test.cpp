@@ -1,63 +1,24 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
+#define ll long long
 using namespace std;
-
-vector<int> adj[200001];
-int firstMax[200001];   // to store first-max length.
-int secondMax[200001];  // to store second-max length.
-int c[200001];          // to store child for path of max length.
-
-// calculate for every node x the maximum
-// length of a path that goes through a child of x
-void dfs(int v, int p) {
-	firstMax[v] = 0;
-	secondMax[v] = 0;
-	for (auto x : adj[v]) {
-		if (x == p) continue;
-		dfs(x, v);
-		if (firstMax[x] + 1 > firstMax[v]) {
-			secondMax[v] = firstMax[v];
-			firstMax[v] = firstMax[x] + 1;
-			c[v] = x;
-		} else if (firstMax[x] + 1 > secondMax[v]) {
-			secondMax[v] = firstMax[x] + 1;
-		}
-	}
-}
-
-// calculate for every node x the
-// maximum length of a path through its parent p
-void dfs2(int v, int p) {
-	for (auto x : adj[v]) {
-		if (x == p) continue;
-		if (c[v] == x) {
-			if (firstMax[x] < secondMax[v] + 1) {
-				secondMax[x] = firstMax[x];
-				firstMax[x] = secondMax[v] + 1;
-				c[x] = v;
-			} else {
-				secondMax[x] = max(secondMax[x], secondMax[v] + 1);
-			}
-		} else {
-			secondMax[x] = firstMax[x];
-			firstMax[x] = firstMax[v] + 1;
-			c[x] = v;
-		}
-		dfs2(x, v);
-	}
-}
-
-int main() {
-	FIO;
-	int n, u, v;
-	cin >> n;
-	for (int i = 0; i < n - 1; i++) {
-		cin >> u >> v;
-		adj[u].push_back(v);
-		adj[v].push_back(u);
-	}
-	dfs(1, -1);
-	dfs2(1, -1);
-
-	for (int i = 1; i <= n; i++) { cout << firstMax[i] << " "; }
-	return 0;
+int main(void){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int n;
+    cin >> n;
+    vector<vector<ll>> dp(n, vector<ll>(n));
+    // len = 1
+    for(int i = 0; i < n; i++) cin >> dp[i][i];
+    // len = 2
+    for(int i = 0; i < n-1; i++)
+        dp[i][i+1] = max(dp[i][i], dp[i+1][i+1]);
+    // len = 3 ~ n
+    for(int len = 3; len <= n; len++){
+        for(int i = 0; i < n-len+1; i++){
+            int l = i, r = i+len-1;
+            dp[l][r] = max(dp[l][l]+min(dp[l+2][r], dp[l+1][r-1]), dp[r][r]+min(dp[l+1][r-1], dp[l][r-2]));
+        }
+    }
+    cout << dp[0][n-1] << "\n";
+    return 0;
 }
