@@ -1,11 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define INF (LLONG_MAX/2)
+#define INF (LLONG_MAX-INT_MAX)
 #define ll long long
 #define pii pair<int, int>
 #define pli pair<ll, int>
 
-vector<ll> dijkstra(vector<vector<pii>> G, int s){
+vector<ll> dijkstra(const vector<vector<pii>>& G, int s){
   int n = G.size();
   vector<ll> dist(n, INF);
   priority_queue<pli, vector<pli>, greater<pli>> pq;

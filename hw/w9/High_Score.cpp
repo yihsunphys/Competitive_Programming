@@ -1,3 +1,6 @@
+// 找最大路徑版本的bellman_ford 可偵測正環
+// 檢測是否有正環位於解答路徑上
+// G1, G2分別為正向邊與反向邊的鄰接表
 // 檢測是否有正環位於解答路徑上
 // G1, G2分別為正向邊與反向邊的鄰接表
 #include <bits/stdc++.h>
@@ -14,26 +17,6 @@ void dfs(int idx, vector<bool> &vis, vector<vector<int>> &G){
     dfs(x, vis, G);
   }
 }
-// 找最大路徑版本的bellman_ford 可偵測正環
-vector<ll> bellman_ford(vector<Edge> E, int n, int S, vector<bool> vis1, vector<bool>vis2) {
-  vector<ll> d(n+1, -INF); 
-  d[S] = 0; // 起點設 0
-  auto relax = [&](Edge e) { 
-    if (d[e.v] < d[e.u] + e.w) {
-      d[e.v] = d[e.u] + e.w;
-      return true;
-    }
-    return false;
-  };
-  for(int t = 1; t <= n; ++t) {
-    bool update= false;
-    for (auto &e : E){
-      update|= relax(e);
-      if(t== n && update && vis1[e.v] && vis2[e.v]) return{};
-    }
-  }
-  return d;
-}
 
 int main(){
   int n, m, u, v, w;
@@ -49,9 +32,6 @@ int main(){
   // 用於檢測點是否在解答路徑上
   dfs(1, vis1, G1);
   dfs(n, vis2, G2);
-  // vector<ll> d = bellman_ford(E, n, 1, vis1, vis2);
-  // if (!d.empty()) cout << d[n] << '\n';
-  // else cout << "-1\n";
   vector<ll> D(n+1, -INF);
   D[1] = 0;
     for(int i = 0; i < n; i++){

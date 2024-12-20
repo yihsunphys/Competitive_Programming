@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
-using namespace std'
-
+using namespace std;
 class BIT{
   int n;
   vector<long long> bit;
@@ -42,27 +41,33 @@ public:
       bit1D[x].modify(y, val);
   }
 };
-
-class RangeAddBIT {
-  int n;
-  BIT D, xD;
-
-public:
-  void init(int _n) {
-    n = _n;
-    D.init(n);
-    xD.init(n);
-  }
-  void add(int ql, int qr, int val) { // [ql, qr] 加值
-    D.modify(ql, val);
-    xD.modify(ql, ql * val);
-    if (qr < n) {
-      D.modify(qr + 1, -val);
-      xD.modify(qr + 1, -(qr + 1) * val);
+int main(){
+  int n, q, type, x1, y1, x2, y2;
+  cin >> n >> q;
+  BIT2D b;
+  b.init(n+1, n+1);
+  vector<vector<bool>> v(n+1, vector<bool>(n+1));
+  for(int i = 1; i <= n; i++){
+    for(int j = 1; j <= n; j++){
+      char c;
+      cin >> c;
+      if(c == '*') b.modify(i, j, 1), v[i][j]=1;
     }
   }
-  long long query(int x) { // 查詢 [1,x] 總和
-    return (x + 1) * D.query(x) - xD.query(x);
+  while(q--){
+    cin >> type;
+    if(type == 1){
+      cin >> x1 >> y1;
+      if(v[x1][y1]) b.modify(x1, y1, -1);
+      else b.modify(x1, y1, 1);
+      v[x1][y1] = !v[x1][y1];
+    }
+    else{
+      cin >> x1 >> y1 >> x2 >> y2;
+      cout << b.query(x2, y2)-b.query(x2,y1-1)-b.query(x1-1, y2)+b.query(x1-1, y1-1) << "\n";
+    }
   }
-};
+}
+
+
 

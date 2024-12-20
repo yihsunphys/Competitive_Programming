@@ -14,7 +14,8 @@ int main(){
   for(int i = 3; i <= n; i++){
     for(int j = 0; j <= n-i; j++){
       int l = j, r = j+i-1; 
-      dp[l][r] = max(dp[l][l]+min(dp[l+2][r], dp[l+1][r-1]), dp[r][r]+min(dp[l][r-2], dp[l+1][r-1]));  
+      dp[l][r] = max(dp[l][l]+min(dp[l+2][r], dp[l+1][r-1])
+      ,dp[r][r]+min(dp[l][r-2], dp[l+1][r-1]));  
     }
   }
   cout << dp[0][n-1] << '\n';

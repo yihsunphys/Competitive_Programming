@@ -1,34 +1,25 @@
 #include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+struct Edge{
+  int u, v, w;
+};
 
-int w[9][9];
-int d[9];
-int parent[9];
-int source;
-void bellman_ford() {
-    for(int i = 0; i < 9; i++) 
-      d[i] = 1e9;
-    d[source] = 0;
-    parent[source] = source;
-
-    for(int i = 0; i < 9; i++) {
-        for(int a = 0; a < 9; a++) {
-            for(int b = 0; b < 9; b++) {
-                if(d[a] != 1e9 && w[a][b] != 1e9) {
-                    if(d[a] + w[a][b] < d[b]){
-                        d[b] = d[a] + w[a][b];
-                        parent[b] = a;
-                    }    
-                }
-            }
-        }
+vector<ll> bellman_ford(vector<Edge> E, int n, int S) {
+  vector<ll> d(n, INF); 
+  d[S] = 0; // 起點設 0
+  auto relax = [&](Edge e) { 
+    if (d[e.v] > d[e.u] + e.w) {
+      d[e.v] = d[e.u] + e.w;
+      return true;
     }
-}
-
-bool negative_cycle(){
-	for (int a=0; a<9; ++a)
-		for (int b=0; b<9; ++b)
-			if (d[a] != 1e9 && w[a][b] != 1e9)
-				if (d[a] + w[a][b] < d[b])
-					return true;
-	return false;
+    return false;
+  };
+  for(int t = 1; t <= n; ++t) {
+    bool update= false;
+    for (auto &e : E)
+      update|= relax(e);
+    if(t == n && update) return{}; //有負環
+  }
+  return d;
 }

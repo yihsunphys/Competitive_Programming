@@ -11,7 +11,7 @@ int main(){
   for(int mask = 1; mask < (1<<n); mask++){
     dp[mask] = {INT_MAX, 0};
     for(int i = 0; i < n; i++){
-      if(mask&(1<<i)){
+      if(mask&(1<<i)){ // 要載這個人
         int pre = mask^(1<<i);
         auto [ride, current_w] = dp[pre];
         if(current_w+v[i] <= x)

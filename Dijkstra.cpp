@@ -14,7 +14,7 @@ vector<long long> dijkstra(const vector<vector<pair<int, int>>> &G, int S) {
   while (q.size()) {
     auto [u_dis, u] = q.top();
     q.pop();
-    if (d[u] < u_dis) continue; // 已經鬆弛過了
+    if (d[u] < u_dis) continue; // 已經被其他點鬆弛過了且pop掉了
     for (auto [v, cost] : G[u]) // 鬆弛所有相鄰的點
     if (d[v] > d[u] + cost) {
       d[v] = d[u] + cost;

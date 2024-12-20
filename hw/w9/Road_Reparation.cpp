@@ -1,6 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
-
+#define ll long long
+struct Edge{
+  int u, v, w;
+};
 class DSA{
   vector<int> parent;
   int Find(int x){
@@ -24,13 +27,25 @@ public:
 };
 
 int main(){
-  int n, q, l, r;
-  cin >> n >> q;
-  DSA dsa(n+1);
-  for(int i = 0; i < q; i++){
-    cin >> l >> r;
-    dsa.Union(l-1, r);
+  int n, m, a, b, c;
+  cin >> n >> m;
+  vector<Edge> E(m); 
+  for(int i = 0; i < m; i++){
+    cin >> E[i].u >> E[i].v >> E[i].w;
   }
-  if(dsa.Same(0, n)) cout << "Yes\n";
-  else cout << "No\n";
+  sort(E.begin(), E.end(), [](Edge a, Edge b){
+    return a.w < b.w;
+  });
+  ll ans = 0;
+  ll cnt = 0;
+  DSA dsa(n);
+  for(auto e: E){
+    if(!dsa.Same(e.u, e.v)){
+      dsa.Union(e.u, e.v);
+      ans += e.w;
+      cnt++;
+    }
+  }
+  if(cnt < n-1) cout << "IMPOSSIBLE\n";
+  else cout << ans << "\n";
 }

@@ -1,4 +1,4 @@
-// 想法: 同一行就在同一個dsa 只需一次magic
+// 想法: 同一行就在同一個並查集 只需一次magic
 #include <bits/stdc++.h>
 using namespace std;
 int p[200005];
@@ -28,3 +28,4 @@ int main(){
   }
   cout << myset.size() << '\n';
 }
+

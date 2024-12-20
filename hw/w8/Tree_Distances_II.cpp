@@ -1,8 +1,9 @@
+// 要找一個node到其他所有點距離的sum
 // 關鍵想法: 找出一個點u的解很容易 做dfs就好 
-// 要找其他u鄰居點x的解 x的子樹深度+1 其餘減1
+// 要找其他u鄰居點x的解 x的子樹深度-1 其餘+1
 #include <bits/stdc++.h>
 using namespace std;
-
+#define ll long long
 vector<vector<int>> tree(2000005);
 vector<ll> sub_size(2000005); 
 vector<ll> ans(2000005);
@@ -21,6 +22,7 @@ void dfs1(int u, int p, int depth){
 void dfs2(int u, int p){
   for(auto x: tree[u]){
     if(x == p) continue;
+    // ans[x] = ans[u] - sub_size[x] + (n - sub_size[x]);
     ans[x] = ans[u] + n - 2*sub_size[x];
     dfs2(x, u);
   }
