@@ -1,0 +1,6 @@
+*.exe
+*.txt
+test.cpp
+**/test.cpp
+**/*.exe
+**/*.txt
