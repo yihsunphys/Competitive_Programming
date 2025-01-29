@@ -1,35 +1,79 @@
-#include <bits/stdc++.h>
-using namespace std;
-
-int my_upper_bound(int *a, int l, int r, int key) { //大於key的最小值
-  while(l <= r) {
-    int mid = (l+r)>>1;
-    if(a[mid]>key) r = mid-1;
-    else l = mid+1;
-  }
-  return l;
+int binary_search(vector<int> &nums, int target) {
+    int left = 0;
+    int right = nums.size() - 1;
+    while (left <= right) {
+        int mid = left + (right - left) / 2; 
+        if (nums[mid] > target) {
+            right = mid - 1;
+        } else if (nums[mid] < target) {
+            left = mid + 1;
+        } else {
+            return mid; 
+        }
+    }
+    return -1;
 }
 
-int my_lower_bound(int *a, int l, int r, int key) { //大於等於key的最小值
-  while(l <= r) {
-    int mid = (l+r)>>1;
-    if(a[mid]>=key) r = mid-1;
-    else l = mid+1;
-  }
-  return l;
+// find item greater than or equal to target 
+int binary_search(vector<int> &nums, int target) {
+    int left = 0;
+    int right = nums.size() - 1;
+    while (left <= right) {
+        int mid = left + (right - left) / 2; 
+        if (nums[mid] > target) {
+            right = mid - 1;
+        } else if (nums[mid] < target) {
+            left = mid + 1;
+        } else {
+            return mid; 
+        }
+    }
+    return left;
 }
 
-int my_binary_search(int *a, int l, int r, int key) { //大於等於key的最小值
-  while(l <= r) {
-    int mid = (l+r)>>1;
-    if(a[mid]>key) r = mid-1;
-    else if(a[mid]<key)l = mid+1;
-    else return mid;
-  }
-  return -1;
+int lower_bound(vector<int> &nums, int target) {
+    int left = 0;
+    int right = nums.size() - 1;
+    while (left <= right) {
+        int mid = (left + right) / 2;
+        if (nums[mid] >= target) {
+            right = mid - 1;
+        } else if (nums[mid] < target) {
+            left = mid + 1;
+        }
+    }
+    return left;
 }
 
-int main() {
-  int a[5] = {1, 2, 3, 4, 5};
-  cout << my_lower_bound(a, 0, 5, 3);
+int upper_bound(vector<int> &nums, int target) {
+    int left = 0;
+    int right = nums.size() - 1;
+    while (left <= right) {
+        int mid = (left + right) / 2;
+        if (nums[mid] > target) {
+            right = mid - 1;
+        } else if (nums[mid] <= target) {
+            left = mid + 1;
+        }
+    }
+    return left;
+}
+
+// template
+bool is_valid(vector<int> &nums, int i) {
+  // Is current position i valid?
+}
+
+int binary_search_left(vector<int> &nums, int target) {
+    int left = 0;
+    int right = nums.size() - 1;
+    while (left <= right) {
+        int mid = (left + right) / 2;
+        if (is_valid(nums, mid)) {
+            right = mid - 1;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return left;
 }
