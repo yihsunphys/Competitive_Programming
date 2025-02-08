@@ -1,31 +1,14 @@
 class Solution {
-public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-      vector<pair<int,int>> myvec;
-      int l = nums.size();
-      for(int i = 0; i < l; i++) {
-        myvec.push_back({nums[i], i});
+  public:
+      vector<int> twoSum(vector<int>& nums, int target) {
+          std::unordered_map <int,int> map;
+          for(int i = 0; i < nums.size(); i++) {
+              auto iter = map.find(target - nums[i]); 
+              if(iter != map.end()) {
+                  return {iter->second, i};
+              }
+              map[nums[i]] = i; 
+          }
+          return {};
       }
-      sort(myvec.begin(), myvec.end());
-      int index1 = 0;
-	  int index2 = myvec.size() - 1;
-      int sum;
-      vector<int> answer;
-        while(index1 < index2) {
-            sum = myvec[index1].first + myvec[index2].first;
-            
-	    if(sum == target)
-                break;
-            else if(sum < target)
-                index1++;
-            else
-                index2--;
-        }
-        
-        answer.push_back(myvec[index1].second);
-        answer.push_back(myvec[index2].second);
-        
-        return answer;
-    }
-};
-//比較快的方法
+  };
